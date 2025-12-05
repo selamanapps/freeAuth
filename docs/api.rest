@@ -1,0 +1,21 @@
+@baseUrl = http://localhost:1996
+
+### 1. Initialize Verification
+# Replace the phone number below with your ACTUAL Telegram phone number.
+# The bot will reject the verification if the contact you share doesn't match this number.
+# @name init
+POST {{baseUrl}}/api/init
+Content-Type: application/json
+
+{
+    "phone": "+2519xxxxxxxx",
+    "client_secret": "test_secure_key",
+    "webhook_url": "https://webhook.site/your-test-url"
+}
+
+### 2. Check Verification Status
+# Run this request repeatedly to check if the user has verified.
+# This automatically uses the token from the request above.
+@token = {{init.response.body.token}}
+
+GET {{baseUrl}}/api/check/{{token}}

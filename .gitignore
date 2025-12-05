@@ -1,0 +1,212 @@
+# FreeAuth - Professional Git Ignore File
+# =========================================
+
+# Dependencies
+# ------------
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Environment Variables
+# --------------------
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.staging.local
+.env.*.local
+
+# Secrets & Credentials
+# ---------------------
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+*.secret
+*.token
+firebase-service-account.json
+service-account-key.json
+google-credentials.json
+
+# Runtime Data
+# ------------
+*.pid
+*.seed
+*.pid.lock
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs
+# ----
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
+
+# Coverage & Testing
+# ------------------
+coverage/
+.nyc_output/
+*.lcov
+.istanbul
+
+# Build Output
+# ------------
+dist/
+build/
+.out/
+.next/
+.nuxt/
+.cache/
+.temp/
+.tmp/
+*.tsbuildinfo
+
+# IDE & Editor
+# ------------
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
+*.sublime-*
+*.code-workspace
+
+# OS Generated Files
+# ------------------
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Cloudflare Worker
+# -----------------
+.wrangler/
+.wrangler-state/
+.wrangler.toml  # Keep config/wrangler.toml instead
+
+# Docker
+# ------
+.dockerignore
+docker-compose.override.yml
+
+# Temporary Files
+# ---------------
+*.tmp
+*.temp
+*.bak
+*.backup
+*.old
+*.orig
+*.rej
+
+# Archives
+# --------
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+# Documentation
+# -------------
+_site/
+.sass-cache/
+.jekyll-cache/
+.jekyll-metadata
+
+# Database
+# --------
+*.db
+*.sqlite
+*.sqlite3
+
+# Firebase
+# --------
+.firebase/
+.firebaserc
+
+# Misc
+# ----
+.cache
+.parcel-cache
+.eslintcache
+.stylelintcache
+.history/
+.chrome/
+.ssh/
+
+# Project Specific
+# ----------------
+archive/           # Archived old files (keep if needed, but usually ignore)
+config/wrangler.toml  # Keep template in config/, ignore local copies
+src/workers/wrangler.toml  # Local worker config
+# public/          # GitHub Pages site - DO NOT IGNORE (committed for deployment)
+# Note: index.html and 404.html are now in root for GitHub Pages
+_archive
+# Development Tools
+# -----------------
+.eslintrc.js
+.prettierrc.js
+.stylelintrc.js
+.babelrc
+.tsconfig.json
+.jsconfig.json
+
+# Performance & Profiling
+# -----------------------
+*.cpuprofile
+*.heapsnapshot
+
+# Security
+# --------
+*.pem
+*.key
+*.crt
+*.csr
+*.der
+
+# FreeAuth Specific
+# -----------------
+# Session storage files (if using file-based storage)
+sessions/
+storage/
+
+# Telegram bot cache
+.bot-cache/
+
+# Temporary uploads
+uploads/
+temp/
+
+# =========================================
+# Notes:
+# 1. Keep config/wrangler.toml.example in repo
+# 2. Keep .env.example in repo
+# 3. Ignore all actual environment files
+# 4. Archive directory contains old project files
+# =========================================

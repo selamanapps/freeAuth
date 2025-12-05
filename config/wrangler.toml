@@ -1,0 +1,125 @@
+# FreeAuth Cloudflare Worker - Free Tier Configuration
+# ====================================================
+# This configuration is optimized for 100% free services.
+# No KV namespaces, Durable Objects, or paid features.
+
+name = "freeauth-worker"
+main = "index.js"
+compatibility_date = "2024-12-01"
+compatibility_flags = ["nodejs_compat"]
+
+# Account ID (Required for deployment)
+# Get this from your Cloudflare dashboard: https://dash.cloudflare.com/
+account_id = "YOUR_CLOUDFLARE_ACCOUNT_ID"
+
+# ====================
+# ENVIRONMENT CONFIGURATION
+# ====================
+
+# Development environment (local testing)
+[env.dev]
+name = "freeauth-worker-dev"
+# Use wrangler dev for local development
+# Variables are loaded from .dev.vars file
+
+# Production environment (free tier - use workers.dev)
+[env.production]
+name = "freeauth-worker"
+workers_dev = true  # Free *.workers.dev subdomain
+# Optional: Add custom domain if you have one (free with Cloudflare)
+# route = { pattern = "freeauth.yourdomain.com", zone_name = "yourdomain.com" }
+
+# ====================
+# SECURITY CONFIGURATION
+# ====================
+
+# Environment Variables (Secrets)
+# Use `wrangler secret put <NAME>` to set these securely
+[vars]
+# These are non-secret variables
+ENVIRONMENT = "production"
+VERSION = "1.0.0"
+MAX_SESSION_AGE = "3600"  # 1 hour in seconds
+
+# ====================
+# PERFORMANCE & LIMITS
+# ====================
+
+[limits]
+cpu_ms = 10  # Free tier limit: 10ms CPU time per request
+memory = 128  # Maximum memory per request (MB)
+
+# ====================
+# OBSERVABILITY
+# ====================
+
+[observability]
+# Enable logging (free in Cloudflare dashboard)
+[observability.logs]
+enabled = true
+
+# ====================
+# BUILD CONFIGURATION
+# ====================
+
+[build]
+command = ""  # No build needed for simple worker
+watch_dir = "."
+
+[build.upload]
+format = "modules"
+dir = "."
+
+# ====================
+# COMPATIBILITY
+# ====================
+
+# Node.js compatibility for Firebase/Telegram APIs
+node_compat = true
+
+# ====================
+# SECURITY HEADERS (via Workers)
+# ====================
+# These headers will be added to all responses
+[[headers]]
+for = "*"
+[headers.values]
+"X-Content-Type-Options" = "nosniff"
+"X-Frame-Options" = "DENY"
+"X-XSS-Protection" = "1; mode=block"
+"Referrer-Policy" = "strict-origin-when-cross-origin"
+
+# ====================
+# FREE TIER NOTES
+# ====================
+# 1. Cloudflare Workers Free Tier:
+#    - 100,000 requests per day
+#    - 10ms CPU time per request
+#    - No KV namespaces (removed for free tier)
+#    - No Durable Objects (removed for free tier)
+#
+# 2. Firebase Firestore Free Tier:
+#    - 1GB storage
+#    - 50,000 reads per day
+#    - 20,000 writes per day  
+#    - 20,000 deletes per day
+#
+# 3. Telegram Bot API: Free
+#
+# 4. Always use `wrangler secret put` for sensitive data:
+#    - BOT_TOKEN
+#    - FIREBASE_SERVICE_ACCOUNT (as JSON string)
+#    - BOT_USERNAME
+#
+# 5. Monitor usage to stay within free tier limits
+
+# ====================
+# DEPLOYMENT COMMANDS
+# ====================
+# Development: wrangler dev --env dev
+# Production: wrangler deploy --env production
+#
+# Set secrets:
+# wrangler secret put BOT_TOKEN --env production
+# wrangler secret put FIREBASE_SERVICE_ACCOUNT --env production
+# wrangler secret put BOT_USERNAME --env production

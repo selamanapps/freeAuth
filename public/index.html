@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FreeAuth | The SMS Killer for Ethiopia</title>
+
+    <!-- Libraries -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Custom Config -->
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['"Plus Jakarta Sans"', "sans-serif"],
+            },
+            colors: {
+              telegram: "#229ED9",
+              brand: {
+                50: "#eff6ff",
+                100: "#dbeafe",
+                500: "#3b82f6",
+                600: "#2563eb",
+                900: "#1e3a8a",
+              },
+            },
+            animation: {
+              float: "float 6s ease-in-out infinite",
+              "slide-up": "slideUp 0.5s ease-out forwards",
+            },
+            keyframes: {
+              float: {
+                "0%, 100%": { transform: "translateY(0)" },
+                "50%": { transform: "translateY(-20px)" },
+              },
+              slideUp: {
+                "0%": { transform: "translateY(20px)", opacity: "0" },
+                "100%": { transform: "translateY(0)", opacity: "1" },
+              },
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        background-color: #0f172a;
+        color: white;
+      }
+      .glass-panel {
+        background: rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+      .code-block {
+        background: #1e293b;
+        border: 1px solid #334155;
+      }
+      /* Custom Scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #0f172a;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #334155;
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #475569;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+      const { useState, useEffect } = React;
+
+      // --- ICONS & ASSETS ---
+      const Icons = {
+        Shield: () => (
+          <svg
+            className="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+            ></path>
+          </svg>
+        ),
+        Zap: () => (
+          <svg
+            className="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M13 10V3L4 14h7v7l9-11h-7z"
+            ></path>
+          </svg>
+        ),
+        Code: () => (
+          <svg
+            className="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"
+            ></path>
+          </svg>
+        ),
+        Telegram: () => <i className="fab fa-telegram text-2xl"></i>,
+      };
+
+      // --- COMPONENTS ---
+
+      const CodeSnippet = ({ title, code, lang = "json" }) => (
+        <div className="rounded-xl overflow-hidden my-4 border border-slate-700 shadow-2xl">
+          <div className="bg-slate-800/50 px-4 py-2 flex justify-between items-center border-b border-slate-700">
+            <span className="text-xs font-mono text-slate-400">{title}</span>
+            <span className="text-xs font-bold text-slate-500 uppercase">
+              {lang}
+            </span>
+          </div>
+          <div className="bg-[#0b1120] p-4 overflow-x-auto">
+            <pre className="font-mono text-sm text-blue-100 whitespace-pre">
+              <code>{code}</code>
+            </pre>
+          </div>
+        </div>
+      );
+
+      const DemoPhone = () => {
+        const [step, setStep] = useState(0);
+
+        // Auto-advance the demo
+        useEffect(() => {
+          const timers = [];
+          if (step === 1) timers.push(setTimeout(() => setStep(2), 1500));
+          if (step === 2) timers.push(setTimeout(() => setStep(3), 1000));
+          if (step === 4) timers.push(setTimeout(() => setStep(5), 2000));
+          if (step === 5) timers.push(setTimeout(() => setStep(0), 4000)); // Reset loop
+          return () => timers.forEach(clearTimeout);
+        }, [step]);
+
+        return (
+          <div className="relative w-[300px] h-[600px] bg-slate-900 rounded-[2.5rem] border-[8px] border-slate-800 shadow-2xl overflow-hidden mx-auto lg:mx-0">
+            {/* Status Bar */}
+            <div className="h-6 bg-slate-900 flex justify-between px-4 items-center text-[10px] text-white z-20 relative">
+              <span>9:41</span>
+              <div className="flex gap-1">
+                <i className="fas fa-signal"></i>
+                <i className="fas fa-wifi"></i>
+                <i className="fas fa-battery-full"></i>
+              </div>
+            </div>
+
+            {/* App Header */}
+            <div className="bg-[#517DA2] p-3 flex items-center text-white z-10 relative shadow-md">
+              <i className="fas fa-arrow-left mr-3"></i>
+              <div className="flex-1">
+                <div className="font-semibold text-sm">FreeAuth | Secure</div>
+                <div className="text-[10px] text-blue-200">bot</div>
+              </div>
+              <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
+                <i className="fas fa-shield-alt text-sm"></i>
+              </div>
+            </div>
+
+            {/* Chat Area */}
+            <div className="bg-[#0e1621] h-full p-2 flex flex-col pt-4 overflow-hidden relative">
+              {/* Background Pattern */}
+              <div
+                className="absolute inset-0 opacity-5"
+                style={{
+                  backgroundImage:
+                    "radial-gradient(#ffffff 1px, transparent 1px)",
+                  backgroundSize: "20px 20px",
+                }}
+              ></div>
+
+              {/* Step 0: Start Button */}
+              {step === 0 && (
+                <div className="absolute bottom-20 left-4 right-4 animate-slide-up">
+                  <button
+                    onClick={() => setStep(1)}
+                    className="w-full bg-[#517DA2] text-white font-medium py-3 rounded-lg shadow-lg hover:bg-[#4a7293] transition-colors"
+                  >
+                    START
+                  </button>
+                </div>
+              )}
+
+              {/* Step 1: User sends start */}
+              {step >= 1 && (
+                <div className="self-end bg-[#2b5278] text-white p-2 px-3 rounded-l-lg rounded-tr-lg mb-2 max-w-[80%] text-sm shadow-sm animate-slide-up">
+                  /start token-123
+                  <div className="text-[10px] text-blue-200 text-right mt-1">
+                    9:41 AM <i className="fas fa-check"></i>
+                  </div>
+                </div>
+              )}
+
+              {/* Step 2: Bot Reply with Image */}
+              {step >= 2 && (
+                <div className="self-start bg-[#182533] text-white rounded-r-lg rounded-tl-lg mb-2 max-w-[85%] shadow-sm animate-slide-up overflow-hidden border border-slate-700">
+                  <div className="h-24 bg-gradient-to-r from-blue-600 to-indigo-600 flex items-center justify-center">
+                    <i className="fas fa-fingerprint text-4xl text-white/80"></i>
+                  </div>
+                  <div className="p-2 text-sm">
+                    <b>🔒 Security Check</b>
+                    <br />
+                    <span className="text-gray-400 text-xs">
+                      Please verify your phone number matches your account.
+                    </span>
+                  </div>
+                </div>
+              )}
+
+              {/* Step 3: Button appears */}
+              {step === 3 && (
+                <div className="mt-auto mb-4 px-2 animate-slide-up">
+                  <button
+                    onClick={() => setStep(4)}
+                    className="w-full bg-[#2ea6ff] hover:bg-[#2895e5] text-white font-semibold py-3 rounded-lg shadow-lg flex items-center justify-center gap-2 transition-transform active:scale-95"
+                  >
+                    <i className="fas fa-mobile-alt"></i> Share Contact
+                  </button>
+                </div>
+              )}
+
+              {/* Step 4: Contact Shared */}
+              {step >= 4 && (
+                <div className="self-end bg-[#2b5278] text-white p-3 rounded-l-lg rounded-tr-lg mb-2 max-w-[80%] text-sm shadow-sm animate-slide-up">
+                  <div className="font-semibold text-blue-200">
+                    Abebe Kebede
+                  </div>
+                  <div className="text-xs text-gray-300">+251 911 234 567</div>
+                </div>
+              )}
+
+              {/* Step 5: Success */}
+              {step >= 5 && (
+                <div className="self-start bg-[#182533] text-white rounded-r-lg rounded-tl-lg mb-2 max-w-[85%] shadow-sm animate-slide-up border border-green-900/50">
+                  <div className="p-3 text-sm border-l-4 border-green-500">
+                    ✅ <b>Verified!</b>
+                    <br />
+                    <span className="text-gray-400 text-xs">
+                      You can return to the app.
+                    </span>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        );
+      };
+
+      const NavBar = ({ activeTab, setTab }) => (
+        <nav className="fixed top-0 w-full z-50 bg-[#0f172a]/80 backdrop-blur-md border-b border-white/10">
+          <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
+            <div
+              className="flex items-center gap-2 font-bold text-xl cursor-pointer"
+              onClick={() => setTab("home")}
+            >
+              <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white shadow-lg shadow-blue-500/30">
+                <i className="fas fa-check"></i>
+              </div>
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-white to-slate-400">
+                FreeAuth
+              </span>
+            </div>
+            <div className="flex gap-1 md:gap-2 text-sm font-medium">
+              {["Home", "Developers", "Deploy", "Support"].map((tab) => (
+                <button
+                  key={tab}
+                  onClick={() => setTab(tab.toLowerCase())}
+                  className={`px-4 py-2 rounded-full transition-all ${
+                    activeTab === tab.toLowerCase()
+                      ? "bg-blue-600 text-white shadow-lg shadow-blue-900/50"
+                      : "text-slate-400 hover:text-white hover:bg-white/5"
+                  }`}
+                >
+                  {tab}
+                </button>
+              ))}
+                <a
+                  href="https://github.com/selamanapps/freeAuth"
+                  target="_blank"
+                  className="hidden md:flex w-9 h-9 items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors ml-2"
+                >
+                  <i className="fab fa-github"></i>
+                </a>
+            </div>
+          </div>
+        </nav>
+      );
+
+      // --- SECTIONS ---
+
+      const Home = ({ setTab }) => (
+        <div className="pt-24 pb-20">
+          {/* Hero */}
+          <div className="max-w-7xl mx-auto px-4 flex flex-col lg:flex-row items-center gap-16">
+            <div className="flex-1 space-y-8 text-center lg:text-left">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold uppercase tracking-wider">
+                <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
+                Built for Ethiopia • 30 verifications/second
+              </div>
+              <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight leading-tight">
+                Verify Millions for <br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-500">
+                  Free or $1/month
+                </span>
+              </h1>
+              <p className="text-lg text-slate-400 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+                Stop paying $0.05 per SMS. Verify users via Telegram for free (self-host) 
+                or let us handle everything for only $1/month (≈150 ETB). Scale to millions 
+                without SMS costs.
+              </p>
+
+              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                <button
+                  onClick={() => setTab("developers")}
+                  className="px-8 py-4 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl shadow-xl shadow-blue-600/20 transition-all transform hover:-translate-y-1"
+                >
+                  Get Started Free
+                </button>
+                <button
+                  onClick={() => setTab("deploy")}
+                  className="px-8 py-4 bg-slate-800 hover:bg-slate-700 text-white font-bold rounded-xl border border-slate-700 transition-all"
+                >
+                  Deploy Your Server
+                </button>
+                <button
+                  onClick={() => setTab("support")}
+                  className="px-8 py-4 bg-green-600 hover:bg-green-500 text-white font-bold rounded-xl shadow-xl shadow-green-600/20 transition-all"
+                >
+                  <i className="fas fa-coffee mr-2"></i> Support Project
+                </button>
+              </div>
+
+              <div className="pt-8 border-t border-white/5 flex flex-wrap justify-center lg:justify-start gap-8 text-slate-500 font-medium text-sm">
+                <div className="flex items-center gap-2">
+                  <Icons.Shield /> <span>Anti-Spoofing</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Icons.Zap /> <span>Instant Webhooks</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Icons.Telegram /> <span>Telegram Native</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex-1 flex justify-center lg:justify-end relative">
+              {/* Decorative blobs */}
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-blue-600/20 rounded-full blur-[100px] -z-10"></div>
+              <div className="animate-float">
+                <div className="relative w-[300px] h-[600px] mx-auto lg:mx-0">
+                  <img 
+                    src="bot-mockup.png" 
+                    alt="FreeAuth Telegram Bot Mockup"
+                    className="w-full h-full object-contain rounded-2xl shadow-2xl border-4 border-slate-800"
+                  />
+                  <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 bg-blue-600 text-white px-4 py-2 rounded-full text-sm font-bold whitespace-nowrap">
+                    30 verifications/second • Millions scale
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Features Grid */}
+          <div className="max-w-7xl mx-auto px-4 mt-32">
+            <h2 className="text-3xl font-bold text-center mb-16">
+              Why Developers Love FreeAuth
+            </h2>
+            <div className="grid md:grid-cols-3 gap-6">
+              {[
+                {
+                  icon: "fa-coins",
+                  color: "text-orange-400",
+                  bg: "bg-orange-400/10",
+                  title: "Save 100% on SMS",
+                  desc: "SMS gateways charge in USD. FreeAuth runs on Telegram's free API infrastructure. Scale to millions of users without paying a cent.",
+                },
+                {
+                  icon: "fa-lock",
+                  color: "text-green-400",
+                  bg: "bg-green-400/10",
+                  title: "Spoof Proof",
+                  desc: "We cryptographically verify that the shared contact belongs to the Telegram account sending it. No contact forwarding attacks allowed.",
+                },
+                {
+                  icon: "fa-bell",
+                  color: "text-purple-400",
+                  bg: "bg-purple-400/10",
+                  title: "Free Notifications",
+                  desc: "Once verified, you can send transactional alerts (orders, rides, login) to the user via the bot for free forever.",
+                },
+              ].map((feature, i) => (
+                <div
+                  key={i}
+                  className="glass-panel p-8 rounded-2xl hover:bg-white/5 transition-colors"
+                >
+                  <div
+                    className={`w-14 h-14 ${feature.bg} ${feature.color} rounded-xl flex items-center justify-center text-2xl mb-6`}
+                  >
+                    <i className={`fas ${feature.icon}`}></i>
+                  </div>
+                  <h3 className="text-xl font-bold mb-3">{feature.title}</h3>
+                  <p className="text-slate-400 leading-relaxed">
+                    {feature.desc}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Capabilities Section */}
+          <div className="max-w-7xl mx-auto px-4 mt-32">
+            <h2 className="text-3xl font-bold text-center mb-16">
+              Scale to Millions with Zero SMS Costs
+            </h2>
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {[
+                {
+                  value: "30/sec",
+                  label: "Verifications per second",
+                  desc: "Handle peak traffic effortlessly",
+                  color: "text-green-400",
+                  icon: "fa-bolt"
+                },
+                {
+                  value: "100% Free",
+                  label: "Self-hosted cost",
+                  desc: "No charges for Telegram API usage",
+                  color: "text-blue-400",
+                  icon: "fa-coins"
+                },
+                {
+                  value: "$1/month",
+                  label: "Managed hosting",
+                  desc: "We handle everything (≈150 ETB)",
+                  color: "text-purple-400",
+                  icon: "fa-server"
+                },
+                {
+                  value: "Unlimited",
+                  label: "User scale",
+                  desc: "Telegram's generous bot limits",
+                  color: "text-orange-400",
+                  icon: "fa-users"
+                }
+              ].map((cap, i) => (
+                <div key={i} className="glass-panel p-6 rounded-2xl text-center">
+                  <div className={`w-12 h-12 ${cap.color} bg-opacity-10 mx-auto rounded-full flex items-center justify-center text-xl mb-4`}>
+                    <i className={`fas ${cap.icon}`}></i>
+                  </div>
+                  <div className="text-3xl font-bold mb-2">{cap.value}</div>
+                  <div className="font-semibold mb-2">{cap.label}</div>
+                  <div className="text-sm text-slate-400">{cap.desc}</div>
+                </div>
+              ))}
+            </div>
+            
+            <div className="mt-12 text-center">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green-900/30 border border-green-700/50 text-green-300 text-sm">
+                <i className="fas fa-flag"></i>
+                <span>Built for Ethiopian developers • Pay in ETB (150/month)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+
+      const Developers = () => (
+        <div className="pt-24 pb-20 max-w-5xl mx-auto px-4 animate-slide-up">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold mb-4">Developer Documentation</h2>
+            <p className="text-slate-400">
+              Integrate phone verification in under 5 minutes.
+            </p>
+          </div>
+
+          <div className="flex flex-col md:flex-row gap-8">
+            {/* Sidebar Nav */}
+            <div className="w-full md:w-64 flex-shrink-0 space-y-1">
+              <div className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 px-3">
+                Getting Started
+              </div>
+              {["Overview", "1. Initialize", "2. Verify", "3. Webhook"].map(
+                (item, i) => (
+                  <div
+                    key={i}
+                    className={`px-3 py-2 rounded-lg cursor-pointer font-medium text-sm ${
+                      i === 0
+                        ? "bg-blue-600/10 text-blue-400"
+                        : "text-slate-400 hover:text-white hover:bg-white/5"
+                    }`}
+                  >
+                    {item}
+                  </div>
+                )
+              )}
+            </div>
+
+            {/* Main Content */}
+            <div className="flex-1 min-w-0">
+              {/* Section 1 */}
+              <div className="mb-12">
+                <h3 className="text-2xl font-bold mb-4 text-white">
+                  1. Initialize Session
+                </h3>
+                <p className="text-slate-400 mb-4">
+                  Call this endpoint when your user enters their phone number in
+                  your app. We require the phone number upfront to validate it
+                  later.
+                </p>
+                <CodeSnippet
+                  title="POST /api/init"
+                  code={`curl -X POST https://your-freeauth-server.com/api/init \\
+  -H "Content-Type: application/json" \\
+  -d '{
+    "phone": "+251911234567",
+    "webhook_url": "https://yourapp.com/api/auth/callback",
+    "client_secret": "your_security_key"
+  }'`}
+                />
+                <div className="mt-4">
+                  <h4 className="text-sm font-bold text-slate-300 mb-2">
+                    Response
+                  </h4>
+                  <CodeSnippet
+                    title="200 OK"
+                    code={`{
+  "token": "550e8400-e29b-41d4-a716-446655440000",
+  "bot_link": "https://t.me/FreeAuthBot?start=550e8400..."
+}`}
+                  />
+                </div>
+              </div>
+
+              {/* Section 2 */}
+              <div className="mb-12">
+                <h3 className="text-2xl font-bold mb-4 text-white">
+                  2. Redirect User
+                </h3>
+                <p className="text-slate-400 mb-4">
+                  Use the <code>bot_link</code> from the response to redirect
+                  the user to Telegram.
+                </p>
+                <div className="bg-blue-900/20 border border-blue-500/30 p-4 rounded-lg flex gap-4">
+                  <i className="fas fa-info-circle text-blue-400 mt-1"></i>
+                  <p className="text-sm text-blue-200">
+                    <strong>Pro Tip:</strong> On mobile, this will open the
+                    Telegram app directly. On desktop, it opens the web version.
+                  </p>
+                </div>
+              </div>
+
+              {/* Section 3 */}
+              <div className="mb-12">
+                <h3 className="text-2xl font-bold mb-4 text-white">
+                  3. Handle Webhook
+                </h3>
+                <p className="text-slate-400 mb-4">
+                  Once the user shares their contact in Telegram, FreeAuth will
+                  POST to your <code>webhook_url</code>.
+                </p>
+                <CodeSnippet
+                  title="POST (Incoming Webhook)"
+                  code={`{
+  "event": "verification_success",
+  "token": "550e8400-e29b-41d4-a716-446655440000",
+  "phone": "+251911234567",
+  "telegram_id": 123456789,
+  "chat_id": 123456789,  // <--- Save this for sending notifications later!
+  "secret": "your_security_key"
+}`}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+
+      const Deploy = () => (
+        <div className="pt-24 pb-20 max-w-4xl mx-auto px-4 animate-slide-up">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold mb-4">Deploy Your Own Server</h2>
+            <p className="text-slate-400">
+              You own the data. You own the bot. 100% Open Source.
+            </p>
+          </div>
+
+          <div className="grid gap-8">
+            <div className="glass-panel p-8 rounded-2xl border-l-4 border-blue-500">
+              <div className="flex items-center gap-4 mb-4">
+                <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center font-bold">
+                  1
+                </div>
+                <h3 className="text-xl font-bold">Create Telegram Bot</h3>
+              </div>
+              <p className="text-slate-400 mb-4 ml-14">
+                Message{" "}
+                <a
+                  href="https://t.me/BotFather"
+                  target="_blank"
+                  className="text-blue-400 hover:underline"
+                >
+                  @BotFather
+                </a>{" "}
+                on Telegram. Run <code>/newbot</code> and copy your{" "}
+                <strong>API Token</strong>.
+              </p>
+            </div>
+
+              <div className="glass-panel p-8 rounded-2xl border-l-4 border-purple-500">
+              <div className="flex items-center gap-4 mb-4">
+                <div className="w-10 h-10 bg-purple-600 rounded-full flex items-center justify-center font-bold">
+                  2
+                </div>
+                <h3 className="text-xl font-bold">Get the Code</h3>
+              </div>
+              <div className="ml-14">
+                <p className="text-slate-400 mb-4">
+                  Clone the repository and install dependencies:
+                </p>
+                <div className="code-block p-4 rounded-lg mb-4">
+                  <code className="text-green-400 font-mono text-sm">
+                    git clone https://github.com/selamanapps/freeAuth.git<br />
+                    cd freeAuth<br />
+                    npm install
+                  </code>
+                </div>
+                <a href="https://github.com/selamanapps/freeAuth" target="_blank" className="inline-block bg-slate-700 hover:bg-slate-600 px-4 py-2 rounded text-sm font-mono border border-slate-500 transition-colors">
+                  <i className="fab fa-github mr-2"></i> View on GitHub
+                </a>
+              </div>
+            </div>
+
+            <div className="glass-panel p-8 rounded-2xl border-l-4 border-green-500">
+              <div className="flex items-center gap-4 mb-4">
+                <div className="w-10 h-10 bg-green-600 rounded-full flex items-center justify-center font-bold">
+                  3
+                </div>
+                <h3 className="text-xl font-bold">Deploy to VPS or Cloudflare Workers</h3>
+              </div>
+              <div className="ml-14">
+                <p className="text-slate-400 mb-4">
+                  Choose your preferred hosting:
+                </p>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                  <div className="bg-slate-800/50 p-4 rounded-lg border border-slate-700">
+                    <h4 className="font-bold text-green-400 mb-2">Option A: Your Own VPS</h4>
+                    <p className="text-sm text-slate-400">
+                      Deploy on DigitalOcean, AWS, or any VPS. Full control, ~$5/month.
+                    </p>
+                    <code className="text-xs text-green-300 block mt-2">npm run deploy:vps</code>
+                  </div>
+                  <div className="bg-slate-800/50 p-4 rounded-lg border border-slate-700">
+                    <h4 className="font-bold text-blue-400 mb-2">Option B: Cloudflare Workers</h4>
+                    <p className="text-sm text-slate-400">
+                      Serverless, global edge network. Free tier available.
+                    </p>
+                    <code className="text-xs text-blue-300 block mt-2">npm run deploy:workers</code>
+                  </div>
+                </div>
+                <p className="text-slate-400 text-sm">
+                  <strong>Or let us host it:</strong> We'll manage everything for only <span className="text-green-400 font-bold">$1/month (≈150 ETB)</span>. 
+                  Perfect if you don't want technical complexity.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+
+      const Support = () => (
+        <div className="pt-24 pb-20 max-w-5xl mx-auto px-4 animate-slide-up">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold mb-4">Support FreeAuth</h2>
+            <p className="text-slate-400 text-lg">
+              Help us keep this project free and accessible for Ethiopian developers.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8 mb-12">
+            {[
+              {
+                title: "Buy Me a Coffee",
+                amount: "$3",
+                etb: "≈ 450 ETB",
+                desc: "Support ongoing development",
+                icon: "fa-coffee",
+                color: "bg-yellow-500/10 text-yellow-400",
+                button: "Support with Coffee",
+                popular: false,
+                link: "support.html"
+              },
+              {
+                title: "Monthly Hosting",
+                amount: "$1",
+                etb: "≈ 150 ETB/month",
+                desc: "Let us host FreeAuth for you",
+                icon: "fa-server",
+                color: "bg-green-500/10 text-green-400",
+                button: "Get Managed Hosting",
+                popular: true,
+                link: "support.html"
+              },
+              {
+                title: "Project Sponsor",
+                amount: "$30",
+                etb: "≈ 4,500 ETB",
+                desc: "Enterprise support & features",
+                icon: "fa-star",
+                color: "bg-purple-500/10 text-purple-400",
+                button: "Become a Sponsor",
+                popular: false,
+                link: "support.html"
+              }
+            ].map((tier, i) => (
+              <div key={i} className={`glass-panel p-8 rounded-2xl relative ${tier.popular ? 'border-2 border-green-500' : ''}`}>
+                {tier.popular && (
+                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-green-500 text-white px-4 py-1 rounded-full text-xs font-bold">
+                    Most Popular
+                  </div>
+                )}
+                <div className={`w-14 h-14 ${tier.color} rounded-full flex items-center justify-center text-2xl mb-6 mx-auto`}>
+                  <i className={`fas ${tier.icon}`}></i>
+                </div>
+                <h3 className="text-xl font-bold text-center mb-2">{tier.title}</h3>
+                <div className="text-center mb-4">
+                  <div className="text-3xl font-bold">{tier.amount}</div>
+                  <div className="text-sm text-slate-400">{tier.etb}</div>
+                </div>
+                <p className="text-slate-400 text-center mb-6">{tier.desc}</p>
+                <a href={tier.link} className={`w-full py-3 rounded-lg font-bold ${tier.popular ? 'bg-green-600 hover:bg-green-500' : 'bg-slate-700 hover:bg-slate-600'} transition-colors block text-center`}>
+                  {tier.button}
+                </a>
+              </div>
+            ))}
+          </div>
+
+          <div className="glass-panel p-8 rounded-2xl mb-8">
+            <h3 className="text-2xl font-bold mb-6 text-center">Contact & Payment Information</h3>
+            <div className="grid md:grid-cols-2 gap-8">
+              <div className="space-y-4">
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 bg-blue-500/10 rounded-full flex items-center justify-center text-blue-400 flex-shrink-0">
+                    <i className="fas fa-envelope text-xl"></i>
+                  </div>
+                  <div>
+                    <h4 className="font-bold mb-2">Email</h4>
+                    <p className="text-slate-400">
+                      <a href="mailto:amansisa.tadese@gmail.com" className="text-blue-400 hover:underline">
+                        amansisa.tadese@gmail.com
+                      </a>
+                    </p>
+                    <p className="text-sm text-slate-500 mt-1">For support and inquiries</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 bg-green-500/10 rounded-full flex items-center justify-center text-green-400 flex-shrink-0">
+                    <i className="fab fa-telegram text-xl"></i>
+                  </div>
+                  <div>
+                    <h4 className="font-bold mb-2">Telegram</h4>
+                    <p className="text-slate-400">
+                      <a href="https://t.me/selamanapps" target="_blank" className="text-blue-400 hover:underline">
+                        @selamanapps
+                      </a>
+                    </p>
+                    <p className="text-sm text-slate-500 mt-1">Direct messaging for quick support</p>
+                  </div>
+                </div>
+              </div>
+              <div className="space-y-4">
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 bg-yellow-500/10 rounded-full flex items-center justify-center text-yellow-400 flex-shrink-0">
+                    <i className="fas fa-money-bill-wave text-xl"></i>
+                  </div>
+                  <div>
+                    <h4 className="font-bold mb-2">Payment Methods</h4>
+                    <p className="text-slate-400">
+                      We accept Ethiopian Birr through multiple local payment options
+                    </p>
+                    <ul className="text-sm text-slate-500 mt-2 space-y-1">
+                      <li>• Telebirr & CBE Birr (Mobile Money)</li>
+                      <li>• Abyssinia, Awash, Oromia Banks</li>
+                      <li>• Cash payments in Addis Ababa</li>
+                    </ul>
+                  </div>
+                </div>
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 bg-purple-500/10 rounded-full flex items-center justify-center text-purple-400 flex-shrink-0">
+                    <i className="fas fa-flag text-xl"></i>
+                  </div>
+                  <div>
+                    <h4 className="font-bold mb-2">Ethiopian Focus</h4>
+                    <p className="text-slate-400">
+                      Built specifically for Ethiopian developers facing SMS cost challenges
+                    </p>
+                    <p className="text-sm text-slate-500 mt-1">All payments in ETB, local support</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div className="mt-8 pt-8 border-t border-white/5 text-center">
+              <a href="support.html" className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl transition-colors">
+                <i className="fas fa-external-link-alt"></i>
+                View All Payment Options & Account Details
+              </a>
+              <p className="text-sm text-slate-500 mt-4">
+                Click above to see detailed account information for all payment methods
+              </p>
+            </div>
+          </div>
+
+          <div className="text-center">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green-900/30 border border-green-700/50 text-green-300 text-sm mb-4">
+              <i className="fas fa-shield-alt"></i>
+              <span>Secure payments • Direct support to project development</span>
+            </div>
+            <p className="text-slate-500">
+              Every contribution helps us keep FreeAuth free for self-hosting and accessible to all Ethiopian developers.
+            </p>
+          </div>
+        </div>
+      );
+
+      const App = () => {
+        const [activeTab, setActiveTab] = useState("home");
+
+        return (
+          <div className="min-h-screen flex flex-col font-sans selection:bg-blue-500 selection:text-white">
+            <NavBar activeTab={activeTab} setTab={setActiveTab} />
+
+            <main className="flex-1 relative">
+              {/* Background Gradients */}
+              <div className="fixed top-0 left-0 w-full h-full overflow-hidden -z-50 pointer-events-none">
+                <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-blue-900/20 rounded-full blur-[120px]"></div>
+                <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-indigo-900/20 rounded-full blur-[120px]"></div>
+              </div>
+
+              {activeTab === "home" && <Home setTab={setActiveTab} />}
+              {activeTab === "developers" && <Developers />}
+              {activeTab === "deploy" && <Deploy />}
+              {activeTab === "support" && <Support />}
+            </main>
+
+            <footer className="border-t border-white/5 bg-[#0b1120] py-12 text-center text-slate-500 text-sm">
+              <div className="max-w-7xl mx-auto px-4">
+                <div className="flex flex-col md:flex-row justify-between items-center mb-8">
+                  <div className="mb-6 md:mb-0">
+                    <div className="flex items-center gap-2 font-bold text-lg mb-2">
+                      <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white">
+                        <i className="fas fa-check"></i>
+                      </div>
+                      <span>FreeAuth</span>
+                    </div>
+                    <p className="text-slate-400 text-sm max-w-md">
+                      The SMS Killer for Ethiopia. Verify users via Telegram for free or $1/month.
+                    </p>
+                  </div>
+                  <div className="flex gap-4">
+                    <a href="https://github.com/selamanapps/freeAuth" target="_blank" className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors">
+                      <i className="fab fa-github"></i>
+                    </a>
+                    <button onClick={() => setActiveTab("support")} className="w-10 h-10 rounded-full bg-green-600 hover:bg-green-500 flex items-center justify-center text-white transition-colors">
+                      <i className="fas fa-coffee"></i>
+                    </button>
+                    <div className="w-10 h-10 rounded-full bg-yellow-600/20 border border-yellow-600/50 flex items-center justify-center text-yellow-400">
+                      <i className="fas fa-flag"></i>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="border-t border-white/5 pt-8">
+                  <p className="mb-4">&copy; 2025 FreeAuth Open Source Project. Built with ❤️ for Ethiopian developers.</p>
+                  <div className="flex flex-wrap justify-center gap-6 mb-4">
+                    <a href="https://github.com/selamanapps/freeAuth" target="_blank" className="hover:text-white transition-colors">
+                      <i className="fab fa-github mr-1"></i> GitHub
+                    </a>
+                    <a href="https://github.com/selamanapps/freeAuth/issues" target="_blank" className="hover:text-white transition-colors">
+                      <i className="fas fa-bug mr-1"></i> Issues
+                    </a>
+                    <button onClick={() => setActiveTab("support")} className="hover:text-white transition-colors">
+                      <i className="fas fa-coffee mr-1"></i> Buy Me a Coffee
+                    </button>
+                    <a href="https://github.com/selamanapps/freeAuth/blob/main/LICENSE" target="_blank" className="hover:text-white transition-colors">
+                      <i className="fas fa-file-contract mr-1"></i> ISC License
+                    </a>
+                  </div>
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-900/30 border border-green-700/50 text-green-300 text-xs mb-2">
+                    <i className="fas fa-money-bill-wave"></i>
+                    <span>Ethiopian Birr payments accepted (150 ETB = $1/month)</span>
+                  </div>
+                  <p className="mt-4 text-xs text-slate-600">
+                    This site is hosted on GitHub Pages at <code>selamanapps.github.io/freeAuth</code>
+                  </p>
+                </div>
+              </div>
+            </footer>
+          </div>
+        );
+      };
+
+      const root = ReactDOM.createRoot(document.getElementById("root"));
+      root.render(<App />);
+    </script>
+  </body>
+</html>
