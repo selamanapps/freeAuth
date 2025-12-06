@@ -174,9 +174,9 @@
         }, [step]);
 
         return (
-          <div className="relative w-[300px] h-[600px] bg-slate-900 rounded-[2.5rem] border-[8px] border-slate-800 shadow-2xl overflow-hidden mx-auto lg:mx-0">
+          <div className="relative w-[250px] h-[500px] sm:w-[280px] sm:h-[560px] md:w-[300px] md:h-[600px] bg-slate-900 rounded-[2rem] sm:rounded-[2.5rem] border-[6px] sm:border-[8px] border-slate-800 shadow-2xl overflow-hidden mx-auto lg:mx-0">
             {/* Status Bar */}
-            <div className="h-6 bg-slate-900 flex justify-between px-4 items-center text-[10px] text-white z-20 relative">
+            <div className="h-5 sm:h-6 bg-slate-900 flex justify-between px-3 sm:px-4 items-center text-[8px] sm:text-[10px] text-white z-20 relative">
               <span>9:41</span>
               <div className="flex gap-1">
                 <i className="fas fa-signal"></i>
@@ -186,19 +186,19 @@
             </div>
 
             {/* App Header */}
-            <div className="bg-[#517DA2] p-3 flex items-center text-white z-10 relative shadow-md">
-              <i className="fas fa-arrow-left mr-3"></i>
+            <div className="bg-[#517DA2] p-2 sm:p-3 flex items-center text-white z-10 relative shadow-md">
+              <i className="fas fa-arrow-left mr-2 sm:mr-3"></i>
               <div className="flex-1">
-                <div className="font-semibold text-sm">FreeAuth | Secure</div>
-                <div className="text-[10px] text-blue-200">bot</div>
+                <div className="font-semibold text-xs sm:text-sm">FreeAuth | Secure</div>
+                <div className="text-[8px] sm:text-[10px] text-blue-200">bot</div>
               </div>
-              <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
-                <i className="fas fa-shield-alt text-sm"></i>
+              <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-white/20 flex items-center justify-center">
+                <i className="fas fa-shield-alt text-xs sm:text-sm"></i>
               </div>
             </div>
 
             {/* Chat Area */}
-            <div className="bg-[#0e1621] h-full p-2 flex flex-col pt-4 overflow-hidden relative">
+            <div className="bg-[#0e1621] h-full p-1 sm:p-2 flex flex-col pt-3 sm:pt-4 overflow-hidden relative">
               {/* Background Pattern */}
               <div
                 className="absolute inset-0 opacity-5"
@@ -211,10 +211,10 @@
 
               {/* Step 0: Start Button */}
               {step === 0 && (
-                <div className="absolute bottom-20 left-4 right-4 animate-slide-up">
+                <div className="absolute bottom-16 sm:bottom-20 left-3 right-3 sm:left-4 sm:right-4 animate-slide-up">
                   <button
                     onClick={() => setStep(1)}
-                    className="w-full bg-[#517DA2] text-white font-medium py-3 rounded-lg shadow-lg hover:bg-[#4a7293] transition-colors"
+                    className="w-full bg-[#517DA2] text-white font-medium py-2 sm:py-3 rounded-lg shadow-lg hover:bg-[#4a7293] transition-colors text-sm sm:text-base"
                   >
                     START
                   </button>
@@ -223,9 +223,9 @@
 
               {/* Step 1: User sends start */}
               {step >= 1 && (
-                <div className="self-end bg-[#2b5278] text-white p-2 px-3 rounded-l-lg rounded-tr-lg mb-2 max-w-[80%] text-sm shadow-sm animate-slide-up">
+                <div className="self-end bg-[#2b5278] text-white p-1 px-2 sm:p-2 sm:px-3 rounded-l-lg rounded-tr-lg mb-1 sm:mb-2 max-w-[80%] text-xs sm:text-sm shadow-sm animate-slide-up">
                   /start token-123
-                  <div className="text-[10px] text-blue-200 text-right mt-1">
+                  <div className="text-[8px] sm:text-[10px] text-blue-200 text-right mt-1">
                     9:41 AM <i className="fas fa-check"></i>
                   </div>
                 </div>
@@ -233,14 +233,14 @@
 
               {/* Step 2: Bot Reply with Image */}
               {step >= 2 && (
-                <div className="self-start bg-[#182533] text-white rounded-r-lg rounded-tl-lg mb-2 max-w-[85%] shadow-sm animate-slide-up overflow-hidden border border-slate-700">
-                  <div className="h-24 bg-gradient-to-r from-blue-600 to-indigo-600 flex items-center justify-center">
-                    <i className="fas fa-fingerprint text-4xl text-white/80"></i>
+                <div className="self-start bg-[#182533] text-white rounded-r-lg rounded-tl-lg mb-1 sm:mb-2 max-w-[85%] shadow-sm animate-slide-up overflow-hidden border border-slate-700">
+                  <div className="h-20 sm:h-24 bg-gradient-to-r from-blue-600 to-indigo-600 flex items-center justify-center">
+                    <i className="fas fa-fingerprint text-3xl sm:text-4xl text-white/80"></i>
                   </div>
-                  <div className="p-2 text-sm">
+                  <div className="p-2 text-xs sm:text-sm">
                     <b>🔒 Security Check</b>
                     <br />
-                    <span className="text-gray-400 text-xs">
+                    <span className="text-gray-400 text-[10px] sm:text-xs">
                       Please verify your phone number matches your account.
                     </span>
                   </div>
@@ -249,10 +249,10 @@
 
               {/* Step 3: Button appears */}
               {step === 3 && (
-                <div className="mt-auto mb-4 px-2 animate-slide-up">
+                <div className="mt-auto mb-3 sm:mb-4 px-1 sm:px-2 animate-slide-up">
                   <button
                     onClick={() => setStep(4)}
-                    className="w-full bg-[#2ea6ff] hover:bg-[#2895e5] text-white font-semibold py-3 rounded-lg shadow-lg flex items-center justify-center gap-2 transition-transform active:scale-95"
+                    className="w-full bg-[#2ea6ff] hover:bg-[#2895e5] text-white font-semibold py-2 sm:py-3 rounded-lg shadow-lg flex items-center justify-center gap-1 sm:gap-2 transition-transform active:scale-95 text-sm sm:text-base"
                   >
                     <i className="fas fa-mobile-alt"></i> Share Contact
                   </button>
@@ -261,21 +261,21 @@
 
               {/* Step 4: Contact Shared */}
               {step >= 4 && (
-                <div className="self-end bg-[#2b5278] text-white p-3 rounded-l-lg rounded-tr-lg mb-2 max-w-[80%] text-sm shadow-sm animate-slide-up">
-                  <div className="font-semibold text-blue-200">
+                <div className="self-end bg-[#2b5278] text-white p-2 sm:p-3 rounded-l-lg rounded-tr-lg mb-1 sm:mb-2 max-w-[80%] text-xs sm:text-sm shadow-sm animate-slide-up">
+                  <div className="font-semibold text-blue-200 text-xs sm:text-sm">
                     Abebe Kebede
                   </div>
-                  <div className="text-xs text-gray-300">+251 911 234 567</div>
+                  <div className="text-[10px] sm:text-xs text-gray-300">+251 911 234 567</div>
                 </div>
               )}
 
               {/* Step 5: Success */}
               {step >= 5 && (
-                <div className="self-start bg-[#182533] text-white rounded-r-lg rounded-tl-lg mb-2 max-w-[85%] shadow-sm animate-slide-up border border-green-900/50">
-                  <div className="p-3 text-sm border-l-4 border-green-500">
+                <div className="self-start bg-[#182533] text-white rounded-r-lg rounded-tl-lg mb-1 sm:mb-2 max-w-[85%] shadow-sm animate-slide-up border border-green-900/50">
+                  <div className="p-2 sm:p-3 text-xs sm:text-sm border-l-4 border-green-500">
                     ✅ <b>Verified!</b>
                     <br />
-                    <span className="text-gray-400 text-xs">
+                    <span className="text-gray-400 text-[10px] sm:text-xs">
                       You can return to the app.
                     </span>
                   </div>
@@ -286,45 +286,102 @@
         );
       };
 
-      const NavBar = ({ activeTab, setTab }) => (
-        <nav className="fixed top-0 w-full z-50 bg-[#0f172a]/80 backdrop-blur-md border-b border-white/10">
-          <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-            <div
-              className="flex items-center gap-2 font-bold text-xl cursor-pointer"
-              onClick={() => setTab("home")}
-            >
-              <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white shadow-lg shadow-blue-500/30">
-                <i className="fas fa-check"></i>
+      const NavBar = ({ activeTab, setTab }) => {
+        const [isMenuOpen, setIsMenuOpen] = useState(false);
+        
+        return (
+          <nav className="fixed top-0 w-full z-50 bg-[#0f172a]/95 backdrop-blur-md border-b border-white/10">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="flex items-center justify-between h-16">
+                <div className="flex items-center">
+                  <div
+                    className="flex items-center gap-2 font-bold text-xl cursor-pointer"
+                    onClick={() => setTab("home")}
+                  >
+                    <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white shadow-lg shadow-blue-500/30">
+                      <i className="fas fa-check"></i>
+                    </div>
+                    <span className="bg-clip-text text-transparent bg-gradient-to-r from-white to-slate-400">
+                      FreeAuth
+                    </span>
+                  </div>
+                </div>
+                
+                {/* Desktop menu */}
+                <div className="hidden md:flex items-center gap-1 lg:gap-2 text-sm font-medium">
+                  {["Home", "Developers", "Deploy", "Support"].map((tab) => (
+                    <button
+                      key={tab}
+                      onClick={() => setTab(tab.toLowerCase())}
+                      className={`px-4 py-2 rounded-full transition-all ${
+                        activeTab === tab.toLowerCase()
+                          ? "bg-blue-600 text-white shadow-lg shadow-blue-900/50"
+                          : "text-slate-400 hover:text-white hover:bg-white/5"
+                      }`}
+                    >
+                      {tab}
+                    </button>
+                  ))}
+                  <a
+                    href="https://github.com/selamanapps/freeAuth"
+                    target="_blank"
+                    className="w-9 h-9 ml-2 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors"
+                  >
+                    <i className="fab fa-github"></i>
+                  </a>
+                </div>
+                
+                {/* Mobile menu button */}
+                <div className="md:hidden flex items-center">
+                  <button
+                    onClick={() => setIsMenuOpen(!isMenuOpen)}
+                    className="inline-flex items-center justify-center p-2 rounded-md text-slate-400 hover:text-white hover:bg-white/10 focus:outline-none"
+                  >
+                    <span className="sr-only">Open main menu</span>
+                    {isMenuOpen ? (
+                      <i className="fas fa-times h-6 w-6"></i>
+                    ) : (
+                      <i className="fas fa-bars h-6 w-6"></i>
+                    )}
+                  </button>
+                </div>
               </div>
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-white to-slate-400">
-                FreeAuth
-              </span>
             </div>
-            <div className="flex gap-1 md:gap-2 text-sm font-medium">
-              {["Home", "Developers", "Deploy", "Support"].map((tab) => (
-                <button
-                  key={tab}
-                  onClick={() => setTab(tab.toLowerCase())}
-                  className={`px-4 py-2 rounded-full transition-all ${
-                    activeTab === tab.toLowerCase()
-                      ? "bg-blue-600 text-white shadow-lg shadow-blue-900/50"
-                      : "text-slate-400 hover:text-white hover:bg-white/5"
-                  }`}
-                >
-                  {tab}
-                </button>
-              ))}
-                <a
-                  href="https://github.com/selamanapps/freeAuth"
-                  target="_blank"
-                  className="hidden md:flex w-9 h-9 items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors ml-2"
-                >
-                  <i className="fab fa-github"></i>
-                </a>
-            </div>
-          </div>
-        </nav>
-      );
+
+            {/* Mobile menu */}
+            {isMenuOpen && (
+              <div className="md:hidden bg-[#0f172a]/95 backdrop-blur-md border-t border-white/10">
+                <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                  {["Home", "Developers", "Deploy", "Support"].map((tab) => (
+                    <button
+                      key={tab}
+                      onClick={() => {
+                        setTab(tab.toLowerCase());
+                        setIsMenuOpen(false);
+                      }}
+                      className={`w-full text-left px-3 py-2 rounded-md text-base font-medium transition-all ${
+                        activeTab === tab.toLowerCase()
+                          ? "bg-blue-600 text-white shadow-lg shadow-blue-900/50"
+                          : "text-slate-400 hover:text-white hover:bg-white/5"
+                      }`}
+                    >
+                      {tab}
+                    </button>
+                  ))}
+                  <a
+                    href="https://github.com/selamanapps/freeAuth"
+                    target="_blank"
+                    className="flex items-center px-3 py-2 rounded-md text-base font-medium text-slate-400 hover:text-white hover:bg-white/5 transition-colors"
+                  >
+                    <i className="fab fa-github mr-3"></i>
+                    GitHub
+                  </a>
+                </div>
+              </div>
+            )}
+          </nav>
+        );
+      };
 
       // --- SECTIONS ---
 
@@ -337,7 +394,7 @@
                 <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
                 Built for Ethiopia • 30 verifications/second
               </div>
-              <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight leading-tight">
+              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-tight">
                 Verify Millions for <br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-500">
                   Free or $1/month
@@ -349,22 +406,22 @@
                 without SMS costs.
               </p>
 
-              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start">
                 <button
                   onClick={() => setTab("developers")}
-                  className="px-8 py-4 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl shadow-xl shadow-blue-600/20 transition-all transform hover:-translate-y-1"
+                  className="px-6 sm:px-8 py-3 sm:py-4 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl shadow-xl shadow-blue-600/20 transition-all transform hover:-translate-y-1 text-sm sm:text-base"
                 >
                   Get Started Free
                 </button>
                 <button
                   onClick={() => setTab("deploy")}
-                  className="px-8 py-4 bg-slate-800 hover:bg-slate-700 text-white font-bold rounded-xl border border-slate-700 transition-all"
+                  className="px-6 sm:px-8 py-3 sm:py-4 bg-slate-800 hover:bg-slate-700 text-white font-bold rounded-xl border border-slate-700 transition-all text-sm sm:text-base"
                 >
                   Deploy Your Server
                 </button>
                 <button
                   onClick={() => setTab("support")}
-                  className="px-8 py-4 bg-green-600 hover:bg-green-500 text-white font-bold rounded-xl shadow-xl shadow-green-600/20 transition-all"
+                  className="px-6 sm:px-8 py-3 sm:py-4 bg-green-600 hover:bg-green-500 text-white font-bold rounded-xl shadow-xl shadow-green-600/20 transition-all text-sm sm:text-base"
                 >
                   <i className="fas fa-coffee mr-2"></i> Support Project
                 </button>
@@ -385,15 +442,15 @@
 
             <div className="flex-1 flex justify-center lg:justify-end relative">
               {/* Decorative blobs */}
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-blue-600/20 rounded-full blur-[100px] -z-10"></div>
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] sm:w-[400px] sm:h-[400px] md:w-[500px] md:h-[500px] bg-blue-600/20 rounded-full blur-[100px] -z-10"></div>
               <div className="animate-float">
-                <div className="relative w-[300px] h-[600px] mx-auto lg:mx-0">
+                <div className="relative w-[250px] h-[500px] sm:w-[280px] sm:h-[560px] md:w-[300px] md:h-[600px] mx-auto lg:mx-0">
                   <img 
                     src="bot-mockup.png" 
                     alt="FreeAuth Telegram Bot Mockup"
                     className="w-full h-full object-contain rounded-2xl shadow-2xl border-4 border-slate-800"
                   />
-                  <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 bg-blue-600 text-white px-4 py-2 rounded-full text-sm font-bold whitespace-nowrap">
+                  <div className="absolute -bottom-4 sm:-bottom-6 left-1/2 -translate-x-1/2 bg-blue-600 text-white px-3 py-1 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-bold whitespace-nowrap">
                     30 verifications/second • Millions scale
                   </div>
                 </div>
@@ -402,11 +459,11 @@
           </div>
 
           {/* Features Grid */}
-          <div className="max-w-7xl mx-auto px-4 mt-32">
-            <h2 className="text-3xl font-bold text-center mb-16">
+          <div className="max-w-7xl mx-auto px-4 mt-20 sm:mt-32">
+            <h2 className="text-2xl sm:text-3xl font-bold text-center mb-8 sm:mb-16">
               Why Developers Love FreeAuth
             </h2>
-            <div className="grid md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
               {[
                 {
                   icon: "fa-coins",
@@ -432,15 +489,15 @@
               ].map((feature, i) => (
                 <div
                   key={i}
-                  className="glass-panel p-8 rounded-2xl hover:bg-white/5 transition-colors"
+                  className="glass-panel p-6 sm:p-8 rounded-2xl hover:bg-white/5 transition-colors"
                 >
                   <div
-                    className={`w-14 h-14 ${feature.bg} ${feature.color} rounded-xl flex items-center justify-center text-2xl mb-6`}
+                    className={`w-12 h-12 sm:w-14 sm:h-14 ${feature.bg} ${feature.color} rounded-xl flex items-center justify-center text-xl sm:text-2xl mb-4 sm:mb-6`}
                   >
                     <i className={`fas ${feature.icon}`}></i>
                   </div>
-                  <h3 className="text-xl font-bold mb-3">{feature.title}</h3>
-                  <p className="text-slate-400 leading-relaxed">
+                  <h3 className="text-lg sm:text-xl font-bold mb-2 sm:mb-3">{feature.title}</h3>
+                  <p className="text-slate-400 text-sm sm:text-base leading-relaxed">
                     {feature.desc}
                   </p>
                 </div>
@@ -449,11 +506,11 @@
           </div>
 
           {/* Capabilities Section */}
-          <div className="max-w-7xl mx-auto px-4 mt-32">
-            <h2 className="text-3xl font-bold text-center mb-16">
+          <div className="max-w-7xl mx-auto px-4 mt-20 sm:mt-32">
+            <h2 className="text-2xl sm:text-3xl font-bold text-center mb-8 sm:mb-16">
               Scale to Millions with Zero SMS Costs
             </h2>
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
               {[
                 {
                   value: "30/sec",
@@ -484,19 +541,19 @@
                   icon: "fa-users"
                 }
               ].map((cap, i) => (
-                <div key={i} className="glass-panel p-6 rounded-2xl text-center">
-                  <div className={`w-12 h-12 ${cap.color} bg-opacity-10 mx-auto rounded-full flex items-center justify-center text-xl mb-4`}>
+                <div key={i} className="glass-panel p-4 sm:p-6 rounded-2xl text-center">
+                  <div className={`w-10 h-10 sm:w-12 sm:h-12 ${cap.color} bg-opacity-10 mx-auto rounded-full flex items-center justify-center text-lg sm:text-xl mb-3 sm:mb-4`}>
                     <i className={`fas ${cap.icon}`}></i>
                   </div>
-                  <div className="text-3xl font-bold mb-2">{cap.value}</div>
-                  <div className="font-semibold mb-2">{cap.label}</div>
-                  <div className="text-sm text-slate-400">{cap.desc}</div>
+                  <div className="text-xl sm:text-2xl lg:text-3xl font-bold mb-1 sm:mb-2">{cap.value}</div>
+                  <div className="font-semibold text-sm sm:text-base mb-1 sm:mb-2">{cap.label}</div>
+                  <div className="text-xs sm:text-sm text-slate-400">{cap.desc}</div>
                 </div>
               ))}
             </div>
             
-            <div className="mt-12 text-center">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green-900/30 border border-green-700/50 text-green-300 text-sm">
+            <div className="mt-8 sm:mt-12 text-center">
+              <div className="inline-flex items-center gap-2 px-3 py-1 sm:px-4 sm:py-2 rounded-full bg-green-900/30 border border-green-700/50 text-green-300 text-xs sm:text-sm">
                 <i className="fas fa-flag"></i>
                 <span>Built for Ethiopian developers • Pay in ETB (150/month)</span>
               </div>
@@ -882,50 +939,50 @@
               {activeTab === "support" && <Support />}
             </main>
 
-            <footer className="border-t border-white/5 bg-[#0b1120] py-12 text-center text-slate-500 text-sm">
+            <footer className="border-t border-white/5 bg-[#0b1120] py-8 sm:py-12 text-center text-slate-500 text-sm">
               <div className="max-w-7xl mx-auto px-4">
-                <div className="flex flex-col md:flex-row justify-between items-center mb-8">
-                  <div className="mb-6 md:mb-0">
-                    <div className="flex items-center gap-2 font-bold text-lg mb-2">
-                      <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white">
-                        <i className="fas fa-check"></i>
+                <div className="flex flex-col md:flex-row justify-between items-center mb-6 sm:mb-8">
+                  <div className="mb-4 md:mb-0">
+                    <div className="flex items-center gap-2 font-bold text-base sm:text-lg mb-1 sm:mb-2">
+                      <div className="w-6 h-6 sm:w-8 sm:h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white">
+                        <i className="fas fa-check text-xs sm:text-sm"></i>
                       </div>
                       <span>FreeAuth</span>
                     </div>
-                    <p className="text-slate-400 text-sm max-w-md">
+                    <p className="text-slate-400 text-xs sm:text-sm max-w-md">
                       The SMS Killer for Ethiopia. Verify users via Telegram for free or $1/month.
                     </p>
                   </div>
-                  <div className="flex gap-4">
-                    <a href="https://github.com/selamanapps/freeAuth" target="_blank" className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors">
-                      <i className="fab fa-github"></i>
+                  <div className="flex gap-3 sm:gap-4">
+                    <a href="https://github.com/selamanapps/freeAuth" target="_blank" className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors">
+                      <i className="fab fa-github text-sm sm:text-base"></i>
                     </a>
-                    <button onClick={() => setActiveTab("support")} className="w-10 h-10 rounded-full bg-green-600 hover:bg-green-500 flex items-center justify-center text-white transition-colors">
-                      <i className="fas fa-coffee"></i>
+                    <button onClick={() => setActiveTab("support")} className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-green-600 hover:bg-green-500 flex items-center justify-center text-white transition-colors">
+                      <i className="fas fa-coffee text-sm sm:text-base"></i>
                     </button>
-                    <div className="w-10 h-10 rounded-full bg-yellow-600/20 border border-yellow-600/50 flex items-center justify-center text-yellow-400">
-                      <i className="fas fa-flag"></i>
+                    <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-yellow-600/20 border border-yellow-600/50 flex items-center justify-center text-yellow-400">
+                      <i className="fas fa-flag text-sm sm:text-base"></i>
                     </div>
                   </div>
                 </div>
                 
-                <div className="border-t border-white/5 pt-8">
-                  <p className="mb-4">&copy; 2025 FreeAuth Open Source Project. Built with ❤️ for Ethiopian developers.</p>
-                  <div className="flex flex-wrap justify-center gap-6 mb-4">
-                    <a href="https://github.com/selamanapps/freeAuth" target="_blank" className="hover:text-white transition-colors">
+                <div className="border-t border-white/5 pt-6 sm:pt-8">
+                  <p className="mb-3 sm:mb-4 text-xs sm:text-sm">&copy; 2025 FreeAuth Open Source Project. Built with ❤️ for Ethiopian developers.</p>
+                  <div className="flex flex-wrap justify-center gap-3 sm:gap-4 md:gap-6 mb-3 sm:mb-4">
+                    <a href="https://github.com/selamanapps/freeAuth" target="_blank" className="hover:text-white transition-colors text-xs sm:text-sm">
                       <i className="fab fa-github mr-1"></i> GitHub
                     </a>
-                    <a href="https://github.com/selamanapps/freeAuth/issues" target="_blank" className="hover:text-white transition-colors">
+                    <a href="https://github.com/selamanapps/freeAuth/issues" target="_blank" className="hover:text-white transition-colors text-xs sm:text-sm">
                       <i className="fas fa-bug mr-1"></i> Issues
                     </a>
-                    <button onClick={() => setActiveTab("support")} className="hover:text-white transition-colors">
+                    <button onClick={() => setActiveTab("support")} className="hover:text-white transition-colors text-xs sm:text-sm">
                       <i className="fas fa-coffee mr-1"></i> Buy Me a Coffee
                     </button>
-                    <a href="https://github.com/selamanapps/freeAuth/blob/main/LICENSE" target="_blank" className="hover:text-white transition-colors">
+                    <a href="https://github.com/selamanapps/freeAuth/blob/main/LICENSE" target="_blank" className="hover:text-white transition-colors text-xs sm:text-sm">
                       <i className="fas fa-file-contract mr-1"></i> ISC License
                     </a>
                   </div>
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-900/30 border border-green-700/50 text-green-300 text-xs mb-2">
+                  <div className="inline-flex items-center gap-1 sm:gap-2 px-2 py-1 sm:px-3 sm:py-1 rounded-full bg-green-900/30 border border-green-700/50 text-green-300 text-[10px] sm:text-xs mb-1 sm:mb-2">
                     <i className="fas fa-money-bill-wave"></i>
                     <span>Ethiopian Birr payments accepted (150 ETB = $1/month)</span>
                   </div>
