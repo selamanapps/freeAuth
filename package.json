@@ -5,6 +5,7 @@
   "main": "src/server/index.js",
   "scripts": {
     "start": "node src/server/index.js",
+    "start:prod": "pm2 start src/server/index.js --name FreeAuth",
     "dev": "NODE_ENV=development node src/server/index.js",
     "dev:worker": "cd src/workers && wrangler dev",
     "deploy:worker": "cd src/workers && wrangler deploy",

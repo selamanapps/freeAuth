@@ -187,5 +187,5 @@ wrangler rollback
 
 ## Version History
 
-- v1.0.0 (2024-12-05): Initial security documentation
-- v1.0.1 (2024-12-05): Added rate limiting implementation details
+- v1.0.0 (2025-12-05): Initial security documentation
+- v1.0.1 (2025-12-05): Added rate limiting implementation details

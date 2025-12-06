@@ -204,7 +204,7 @@ curl https://your-server.com/health
   "status": "healthy",
   "service": "freeauth-server",
   "environment": "production",
-  "timestamp": "2024-12-05T09:28:33.000Z",
+  "timestamp": "2025-12-05T09:28:33.000Z",
   "uptime": 3600.5
 }
 ```

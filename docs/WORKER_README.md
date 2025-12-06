@@ -110,8 +110,8 @@ GET /api/check/{token}
 {
   "status": "pending|verified|expired",
   "expected_phone": "+1234567890",
-  "created_at": "2024-12-05T08:50:23.000Z",
-  "expires_at": "2024-12-05T09:50:23.000Z"
+  "created_at": "2025-12-05T08:50:23.000Z",
+  "expires_at": "2025-12-05T09:50:23.000Z"
 }
 ```
 
@@ -258,5 +258,5 @@ Proprietary - See main project license.
 
 ---
 
-**Last Updated**: December 5, 2024  
+**Last Updated**: December 5, 2025  
 **Version**: 1.0.0

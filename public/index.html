@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>FreeAuth | The SMS Killer for Ethiopia</title>
+    <title>FreeAuth | The SMFS Killer for Ethiopia</title>
 
     <!-- Libraries -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -544,7 +544,7 @@
                   1. Initialize Session
                 </h3>
                 <p className="text-slate-400 mb-4">
-                  Call this endpoint when your user enters their phone number in
+                  Call this endpoint when your user click <b>Verify through telegram</b> in
                   your app. We require the phone number upfront to validate it
                   later.
                 </p>
@@ -688,7 +688,7 @@
                     <p className="text-sm text-slate-400">
                       Deploy on DigitalOcean, AWS, or any VPS. Full control, ~$5/month.
                     </p>
-                    <code className="text-xs text-green-300 block mt-2">npm run deploy:vps</code>
+                    <code className="text-xs text-green-300 block mt-2">npm run start:prod</code>
                   </div>
                   <div className="bg-slate-800/50 p-4 rounded-lg border border-slate-700">
                     <h4 className="font-bold text-blue-400 mb-2">Option B: Cloudflare Workers</h4>
@@ -700,7 +700,7 @@
                 </div>
                 <p className="text-slate-400 text-sm">
                   <strong>Or let us host it:</strong> We'll manage everything for only <span className="text-green-400 font-bold">$1/month (≈150 ETB)</span>. 
-                  Perfect if you don't want technical complexity.
+                  Perfect if you don't want technical complexity. (This assumes you are startup with new software. not recommended for Enterprise.)
                 </p>
               </div>
             </div>
@@ -718,7 +718,17 @@
           </div>
 
           <div className="grid md:grid-cols-3 gap-8 mb-12">
-            {[
+            {[ {
+                title: "Monthly Hosting",
+                amount: "$1",
+                etb: "≈ 150 ETB/month",
+                desc: "Let us host FreeAuth for you",
+                icon: "fa-server",
+                color: "bg-green-500/10 text-green-400",
+                button: "Get Managed Hosting",
+                popular: false,
+                link: "support.html"
+              },
               {
                 title: "Buy Me a Coffee",
                 amount: "$3",
@@ -727,20 +737,10 @@
                 icon: "fa-coffee",
                 color: "bg-yellow-500/10 text-yellow-400",
                 button: "Support with Coffee",
-                popular: false,
-                link: "support.html"
-              },
-              {
-                title: "Monthly Hosting",
-                amount: "$1",
-                etb: "≈ 150 ETB/month",
-                desc: "Let us host FreeAuth for you",
-                icon: "fa-server",
-                color: "bg-green-500/10 text-green-400",
-                button: "Get Managed Hosting",
                 popular: true,
                 link: "support.html"
               },
+             
               {
                 title: "Project Sponsor",
                 amount: "$30",
@@ -786,8 +786,8 @@
                   <div>
                     <h4 className="font-bold mb-2">Email</h4>
                     <p className="text-slate-400">
-                      <a href="mailto:amansisa.tadese@gmail.com" className="text-blue-400 hover:underline">
-                        amansisa.tadese@gmail.com
+                      <a href="mailto:amanccatt@gmail.com" className="text-blue-400 hover:underline">
+                        amanccatt@gmail.com
                       </a>
                     </p>
                     <p className="text-sm text-slate-500 mt-1">For support and inquiries</p>
@@ -800,8 +800,8 @@
                   <div>
                     <h4 className="font-bold mb-2">Telegram</h4>
                     <p className="text-slate-400">
-                      <a href="https://t.me/selamanapps" target="_blank" className="text-blue-400 hover:underline">
-                        @selamanapps
+                      <a href="https://t.me/amancca" target="_blank" className="text-blue-400 hover:underline">
+                        @amancca
                       </a>
                     </p>
                     <p className="text-sm text-slate-500 mt-1">Direct messaging for quick support</p>
@@ -821,7 +821,6 @@
                     <ul className="text-sm text-slate-500 mt-2 space-y-1">
                       <li>• Telebirr & CBE Birr (Mobile Money)</li>
                       <li>• Abyssinia, Awash, Oromia Banks</li>
-                      <li>• Cash payments in Addis Ababa</li>
                     </ul>
                   </div>
                 </div>
@@ -930,9 +929,7 @@
                     <i className="fas fa-money-bill-wave"></i>
                     <span>Ethiopian Birr payments accepted (150 ETB = $1/month)</span>
                   </div>
-                  <p className="mt-4 text-xs text-slate-600">
-                    This site is hosted on GitHub Pages at <code>selamanapps.github.io/freeAuth</code>
-                  </p>
+                 
                 </div>
               </div>
             </footer>
