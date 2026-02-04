@@ -1,0 +1,395 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FreeAuth Rebranding Guide</title>
+    <meta name="description" content="Configure your Telegram bot's visual identity using BotFather for maximum user trust." />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['"Plus Jakarta Sans"', "sans-serif"],
+              mono: ['"JetBrains Mono"', "monospace"],
+            },
+            colors: {
+              brand: {
+                50: "#ecfdf5",
+                100: "#d1fae5",
+                200: "#a7f3d0",
+                300: "#6ee7b7",
+                400: "#34d399",
+                500: "#10b981",
+                600: "#059669",
+                700: "#047857",
+                800: "#065f46",
+                900: "#064e3b",
+                950: "#022c22",
+              },
+              dark: {
+                900: "#020617",
+                800: "#0f172a",
+                700: "#1e293b",
+              }
+            },
+            animation: {
+              float: "float 6s ease-in-out infinite",
+              "slide-up": "slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards",
+              pulse: "pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+              blob: "blob 7s infinite",
+            },
+            keyframes: {
+              float: {
+                "0%, 100%": { transform: "translateY(0)" },
+                "50%": { transform: "translateY(-20px)" },
+              },
+              slideUp: {
+                "0%": { transform: "translateY(30px)", opacity: "0" },
+                "100%": { transform: "translateY(0)", opacity: "1" },
+              },
+              blob: {
+                "0%": { transform: "translate(0px, 0px) scale(1)" },
+                "33%": { transform: "translate(30px, -50px) scale(1.1)" },
+                "66%": { transform: "translate(-20px, 20px) scale(0.9)" },
+                "100%": { transform: "translate(0px, 0px) scale(1)" },
+              },
+            },
+            backgroundImage: {
+              'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+            }
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        background-color: #020617;
+        color: #f8fafc;
+        overflow-x: hidden;
+      }
+
+      .glass {
+        background: rgba(15, 23, 42, 0.6);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .glass-card {
+        background: linear-gradient(180deg, rgba(30, 41, 59, 0.7) 0%, rgba(15, 23, 42, 0.4) 100%);
+        backdrop-filter: blur(8px);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+      }
+
+      .glass-card:hover {
+        border-color: rgba(16, 185, 129, 0.3);
+        box-shadow: 0 0 20px rgba(16, 185, 129, 0.1);
+      }
+
+      .text-gradient {
+        background: linear-gradient(to right, #34d399, #10b981);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      ::-webkit-scrollbar {
+        width: 6px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #020617;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #1e293b;
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #10b981;
+      }
+
+      .copy-btn {
+        transition: all 0.2s ease;
+      }
+      .copy-btn:hover {
+        transform: scale(1.05);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="min-h-screen">
+      <!-- Header -->
+      <header class="fixed top-0 w-full z-50 glass border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+          <a href="https://github.com/selamanapps/freeAuth" target="_blank" class="flex items-center gap-3 hover:opacity-80 transition-opacity">
+            <div class="w-10 h-10 bg-brand-500/10 border border-brand-500/20 rounded-xl flex items-center justify-center">
+              <i class="fas fa-shield-alt text-brand-500"></i>
+            </div>
+            <span class="font-bold text-xl text-white">FreeAuth</span>
+          </a>
+          <a href="https://github.com/selamanapps/freeAuth" target="_blank" class="flex items-center gap-2 bg-white/10 hover:bg-white/20 px-4 py-2 rounded-full text-sm font-semibold transition-all">
+            <i class="fab fa-github"></i>
+            <span>GitHub</span>
+          </a>
+        </div>
+      </header>
+
+      <!-- Main Content -->
+      <main class="pt-32 pb-20 px-6">
+        <!-- Background Blobs -->
+        <div class="fixed inset-0 overflow-hidden pointer-events-none -z-10">
+          <div class="absolute top-0 left-1/4 w-96 h-96 bg-brand-500/10 rounded-full blur-[100px] animate-blob"></div>
+          <div class="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-[100px] animate-blob" style={{animationDelay: "2s"}}></div>
+        </div>
+
+        <div class="max-w-6xl mx-auto">
+          <!-- Hero Section -->
+          <div class="text-center mb-16 animate-slide-up">
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-950 border border-brand-500/30 text-brand-400 text-xs font-bold uppercase tracking-widest mb-6">
+              <span class="w-2 h-2 rounded-full bg-brand-500 animate-pulse"></span>
+              BotFather Integration
+            </div>
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-6">
+              Rebrand Your <span class="text-gradient">Telegram Bot</span>
+            </h1>
+            <p class="text-lg text-slate-400 max-w-3xl mx-auto leading-relaxed">
+              Configure your bot's visual identity through BotFather. A professional appearance builds user trust and credibility, especially when asking for phone verification.
+            </p>
+          </div>
+
+          <!-- Prerequisites -->
+          <div class="glass-card p-6 rounded-2xl mb-8 animate-slide-up">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-10 h-10 rounded-full bg-brand-600 flex items-center justify-center">
+                <i class="fas fa-rocket text-white"></i>
+              </div>
+              <h2 class="text-xl font-bold">Prerequisites</h2>
+            </div>
+            <ol class="space-y-3 text-slate-300">
+              <li class="flex items-start gap-3">
+                <span class="w-6 h-6 rounded-full bg-slate-800 flex items-center justify-center text-sm font-bold text-brand-400 flex-shrink-0">1</span>
+                <span>Open Telegram app</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="w-6 h-6 rounded-full bg-slate-800 flex items-center justify-center text-sm font-bold text-brand-400 flex-shrink-0">2</span>
+                <span>Search for <strong>@BotFather</strong> (blue checkmark)</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="w-6 h-6 rounded-full bg-slate-800 flex items-center justify-center text-sm font-bold text-brand-400 flex-shrink-0">3</span>
+                <span>Type <code class="bg-slate-800 px-2 py-1 rounded text-sm">/mybots</code> and select your bot</span>
+              </li>
+            </ol>
+          </div>
+
+          <!-- Setup Steps -->
+          <div class="grid md:grid-cols-2 gap-6 mb-12">
+            
+            <!-- Bot Name -->
+            <div class="glass-card p-6 rounded-2xl animate-slide-up" style={{animationDelay: "0.1s"}}>
+              <div class="flex items-start justify-between mb-4">
+                <div class="w-12 h-12 rounded-xl bg-brand-500/10 flex items-center justify-center text-brand-400">
+                  <i class="fas fa-signature text-xl"></i>
+                </div>
+                <code class="bg-slate-800 px-3 py-1 rounded text-sm font-mono text-brand-400">/setname</code>
+              </div>
+              <h3 class="text-lg font-bold mb-2">Bot Name</h3>
+              <p class="text-slate-400 text-sm mb-4">The title displayed in chat list and header. Should be clear and professional.</p>
+              
+              <div class="bg-slate-800/50 rounded-lg p-4 mb-3">
+                <p class="text-slate-300 text-sm"><strong>Recommended:</strong> <code class="text-brand-400">AppName | Action</code></p>
+                <p class="text-slate-300 text-sm mt-2"><strong>Example:</strong> <code class="text-white">FreeAuth | Secure Verification</code></p>
+              </div>
+            </div>
+
+            <!-- Description -->
+            <div class="glass-card p-6 rounded-2xl animate-slide-up" style={{animationDelay: "0.2s"}}>
+              <div class="flex items-start justify-between mb-4">
+                <div class="w-12 h-12 rounded-xl bg-brand-500/10 flex items-center justify-center text-brand-400">
+                  <i class="fas fa-comment-alt text-xl"></i>
+                </div>
+                <code class="bg-slate-800 px-3 py-1 rounded text-sm font-mono text-brand-400">/setdescription</code>
+              </div>
+              <h3 class="text-lg font-bold mb-2">Description</h3>
+              <p class="text-slate-400 text-sm mb-4">The landing page users see before clicking "Start". Explain why and that it's safe.</p>
+              
+              <div class="bg-slate-800/50 rounded-lg p-4">
+                <div class="space-y-2 text-sm">
+                  <p class="text-slate-300">🔐 Secure Identity Verification</p>
+                  <p class="text-slate-400">Welcome! This bot helps verify your phone number.</p>
+                  <p class="text-slate-400">✅ Instant Verification</p>
+                  <p class="text-slate-400">✅ Secure & Private</p>
+                  <p class="text-white mt-2">Tap "Start" below to begin.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- About Text -->
+            <div class="glass-card p-6 rounded-2xl animate-slide-up" style={{animationDelay: "0.3s"}}>
+              <div class="flex items-start justify-between mb-4">
+                <div class="w-12 h-12 rounded-xl bg-brand-500/10 flex items-center justify-center text-brand-400">
+                  <i class="fas fa-info-circle text-xl"></i>
+                </div>
+                <code class="bg-slate-800 px-3 py-1 rounded text-sm font-mono text-brand-400">/setabouttext</code>
+              </div>
+              <h3 class="text-lg font-bold mb-2">About Text</h3>
+              <p class="text-slate-400 text-sm mb-4">Text shown when user clicks on bot profile. Provides credibility and support info.</p>
+              
+              <div class="bg-slate-800/50 rounded-lg p-4">
+                <p class="text-slate-300 text-sm mb-2">Official automated verification gateway for your app. Powered by FreeAuth & Telegram.</p>
+                <p class="text-slate-300 text-sm">Support: @your_support_username</p>
+              </div>
+            </div>
+
+            <!-- Profile Picture -->
+            <div class="glass-card p-6 rounded-2xl animate-slide-up" style={{animationDelay: "0.4s"}}>
+              <div class="flex items-start justify-between mb-4">
+                <div class="w-12 h-12 rounded-xl bg-brand-500/10 flex items-center justify-center text-brand-400">
+                  <i class="fas fa-image text-xl"></i>
+                </div>
+                <code class="bg-slate-800 px-3 py-1 rounded text-sm font-mono text-brand-400">/setuserpic</code>
+              </div>
+              <h3 class="text-lg font-bold mb-2">Profile Picture</h3>
+              <p class="text-slate-400 text-sm mb-4">The icon in the chat list. A default letter icon looks unprofessional.</p>
+              
+              <div class="bg-slate-800/50 rounded-lg p-4">
+                <p class="text-slate-300 text-sm mb-2"><strong>Specs:</strong> Minimum 512x512 pixels</p>
+                <p class="text-slate-400 text-sm">Design tip: Use bold icon on solid background. Avoid small text.</p>
+                <p class="text-slate-400 text-sm mt-2">Idea: White shield with checkmark on blue background</p>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Command List -->
+          <div class="glass-card p-6 rounded-2xl mb-8 animate-slide-up" style={{animationDelay: "0.5s"}}>
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-10 h-10 rounded-full bg-brand-600 flex items-center justify-center">
+                <i class="fas fa-terminal text-white"></i>
+              </div>
+              <h2 class="text-xl font-bold">Command List</h2>
+            </div>
+            <p class="text-slate-400 text-sm mb-4">Optional menu button next to text input for better UX.</p>
+            
+            <div class="bg-slate-800/50 rounded-lg p-4 overflow-x-auto">
+              <code class="font-mono text-sm text-slate-300 whitespace-pre">
+start - Begin verification
+help - Get support
+privacy - Read privacy policy
+              </code>
+            </div>
+          </div>
+
+          <!-- Copy Command -->
+          <div class="glass-card p-6 rounded-2xl mb-8 animate-slide-up" style={{animationDelay: "0.6s"}}>
+            <div class="flex items-center justify-between mb-4">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center">
+                  <i class="fab fa-telegram text-white"></i>
+                </div>
+                <div>
+                  <h2 class="text-xl font-bold">Pro Tip: File IDs for Code</h2>
+                  <p class="text-slate-400 text-sm">Use specific images in your server without external hosting</p>
+                </div>
+              </div>
+              <button onclick="copyFileId()" class="copy-btn bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg font-medium flex items-center gap-2">
+                <i class="fas fa-copy"></i>
+                <span id="copyText">Copy Steps</span>
+              </button>
+            </div>
+            
+            <div class="bg-slate-800/50 rounded-lg p-4">
+              <ol class="space-y-2 text-sm text-slate-300">
+                <li>1. Send image to bot in private chat</li>
+                <li>2. Forward message to <code class="bg-slate-900 px-1 rounded">@JsonDumpBot</code></li>
+                <li>3. Copy <code class="bg-slate-900 px-1 rounded">file_id</code> from JSON</li>
+                <li>4. Use string in <code class="bg-slate-900 px-1 rounded">ASSETS</code> object instead of URL</li>
+              </ol>
+            </div>
+          </div>
+
+          <!-- Summary Table -->
+          <div class="glass-card p-6 rounded-2xl animate-slide-up" style={{animationDelay: "0.7s"}}>
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-10 h-10 rounded-full bg-purple-600 flex items-center justify-center">
+                <i class="fas fa-th-large text-white"></i>
+              </div>
+              <h2 class="text-xl font-bold">Summary</h2>
+            </div>
+            
+            <div class="overflow-x-auto">
+              <table class="w-full text-sm">
+                <thead>
+                  <tr class="border-b border-slate-700">
+                    <th class="text-left py-3 px-2 text-slate-400 font-medium">Element</th>
+                    <th class="text-left py-3 px-2 text-slate-400 font-medium">Command</th>
+                    <th class="text-left py-3 px-2 text-slate-400 font-medium">Where it appears</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="border-b border-slate-800">
+                    <td class="py-3 px-2 text-white">Name</td>
+                    <td class="py-3 px-2"><code class="bg-slate-800 px-2 py-1 rounded text-xs">/setname</code></td>
+                    <td class="py-3 px-2 text-slate-400">Chat header, Notifications</td>
+                  </tr>
+                  <tr class="border-b border-slate-800">
+                    <td class="py-3 px-2 text-white">Description</td>
+                    <td class="py-3 px-2"><code class="bg-slate-800 px-2 py-1 rounded text-xs">/setdescription</code></td>
+                    <td class="py-3 px-2 text-slate-400">Empty screen before Start</td>
+                  </tr>
+                  <tr class="border-b border-slate-800">
+                    <td class="py-3 px-2 text-white">About Text</td>
+                    <td class="py-3 px-2"><code class="bg-slate-800 px-2 py-1 rounded text-xs">/setabouttext</code></td>
+                    <td class="py-3 px-2 text-slate-400">Bot profile info</td>
+                  </tr>
+                  <tr>
+                    <td class="py-3 px-2 text-white">Profile Pic</td>
+                    <td class="py-3 px-2"><code class="bg-slate-800 px-2 py-1 rounded text-xs">/setuserpic</code></td>
+                    <td class="py-3 px-2 text-slate-400">Chat list icon</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- CTA Section -->
+          <div class="mt-16 text-center animate-slide-up" style={{animationDelay: "0.8s"}}>
+            <p class="text-slate-400 text-lg mb-4">Ready to customize your bot?</p>
+            <div class="flex justify-center gap-4">
+              <a href="https://github.com/selamanapps/freeAuth" target="_blank" class="flex items-center gap-2 bg-white/10 hover:bg-white/20 px-6 py-3 rounded-lg font-semibold transition-all">
+                <i class="fab fa-github"></i>
+                View on GitHub
+              </a>
+              <a href="../README.md" class="flex items-center gap-2 bg-brand-600 hover:bg-brand-500 px-6 py-3 rounded-lg font-semibold transition-all">
+                <i class="fas fa-book"></i>
+                Back to Docs
+              </a>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script>
+      function copyFileId() {
+        navigator.clipboard.writeText(
+          "1. Send image to bot in private chat\n" +
+          "2. Forward message to @JsonDumpBot\n" +
+          "3. Copy file_id from JSON\n" +
+          "4. Use string in ASSETS object instead of URL"
+        );
+        
+        const copyText = document.getElementById('copyText');
+        copyText.textContent = 'Copied!';
+        setTimeout(() => {
+          copyText.textContent = 'Copy Steps';
+        }, 2000);
+      }
+    </script>
+  </body>
+</html>

@@ -1,5 +1,13 @@
 # FreeAuth Rebranding Guide
 
+This guide has been moved to a more visual format. Please visit the interactive HTML version for a better experience.
+
+👉 **[View Interactive Rebranding Guide](rebranding_guide.html)**
+
+---
+
+## Quick Summary
+
 This guide explains how to configure the visual identity of your Telegram bot using **@BotFather**. While your server handles the logic and rich media inside the chat, these settings control how your bot appears in search results, shared links, and the profile view.
 
 A professional appearance is critical for user trust, especially when asking for phone number verification.
@@ -48,9 +56,9 @@ A professional appearance is critical for user trust, especially when asking for
 - **Command:** `/setabouttext`
 - **Example:**
   `text
-    Official automated verification gateway for [your app]. Powered by FreeAuth & Telegram.
+   Official automated verification gateway for [your app]. Powered by FreeAuth & Telegram.
 Support: @your_support_usename
-    `
+   `
 
 ## 4. The Profile Picture (Avatar)
 
